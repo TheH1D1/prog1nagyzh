@@ -21,31 +21,30 @@ struct ceg
 struct ceg* kellmemoria(unsigned int meret)
 {
     struct ceg* array = (struct ceg*)calloc(meret, sizeof(struct ceg));
-
     return array;
 }
 
-void torol(struct ceg* tomb){
-
+void torol(struct ceg* tomb)
+{
     free(tomb);
 }
 
-void cegEgyetBeker(struct ceg* ceg){
-
-    scanf("%30s",   &ceg->telephely);
+void cegEgyetBeker(struct ceg* ceg)
+{
+    scanf("%30s",   ceg->telephely);
     scanf("%u",     &ceg->dolgozok);
-    scanf("%.2lf",  &ceg->ertekeles);
+    scanf("%lf",  &ceg->ertekeles);
     scanf("%u",     &ceg->epuletek);
 }
 
 void kiirtomb(struct ceg* ceg, unsigned int meret){
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < meret; i++)
     {
-        printf("%30s", ceg->telephely);
-        printf("%u", ceg->dolgozok);
-        printf("%.2lf", ceg->ertekeles);
-        printf("%u", ceg->epuletek);
+        printf("%s ", ceg[i].telephely);
+        printf("%u ", ceg[i].dolgozok);
+        printf("%.2lf", ceg[i].ertekeles);
+        printf("%u\n ", ceg[i].epuletek);
     }
     
 }
@@ -69,7 +68,7 @@ unsigned int feladat2(struct ceg* ceg, unsigned int meret){
 // <- 2. feladat 
 
 // 3. feladat ->
-unsigned int feladat3(const char *fajlnev){
+void feladat3(const char *fajlnev){
 
     const unsigned int N = 4;
     struct ceg* tomb = kellmemoria(N);
@@ -78,15 +77,15 @@ unsigned int feladat3(const char *fajlnev){
 
     for (unsigned int i = 0; i < N; i++)
     {
-        fscanf("%30s %u %.2lf %u",
-                &tomb[i].telephely,
+        fscanf(fajl,"%30s %u %lf %u",
+                tomb[i].telephely,
                 &tomb[i].dolgozok,
                 &tomb[i].ertekeles,
                 &tomb[i].epuletek
                 );
     }
 
-    fclose(fajlnev);
+    fclose((fajl));
 
     kiirtomb(tomb, N);
 
