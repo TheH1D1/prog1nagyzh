@@ -98,36 +98,73 @@ void feladat3(const char *fajlnev){
 // <- 3. feladat 
 
 // 4. feladat ->
-void fajlba(struct ceg* ceg, unsigned int meret, const char *fajlnev){
-
+void fajlba(struct ceg* ceg, unsigned int meret, const char *fajlnev)
+{
     FILE* fajl = fopen(fajlnev, "w");
-
-
 
     for (int i = 0; i < meret; i++)
     {
         fprintf(fajl,"%u\n", ceg[i].dolgozok);
     }
     fclose(fajl);
-    
 }
 // <- 4. feladat 
 
-
-//Eddig jutottam el
 // 5. feladat ->
 struct cseretarolo
 {
-    
+    struct ceg *elso;
+    struct ceg *masodik;
 };
 
-void kigyujtes(){
-
+void kigyujtes(struct ceg* ceg, int szam1, int szam2, struct cseretarolo* cseretarolo)
+{
+    //A memóriacímek eltárolása
+    cseretarolo->elso = &ceg[szam1];
+    cseretarolo->masodik = &ceg[szam2];
 }
 
+void modosito(struct cseretarolo* cseretarolo)
+{
+    unsigned int temp;
+
+    //1. A tempen eltároljuk a struct ceg *elso értékeit.
+    temp = cseretarolo->elso->epuletek;
+
+    //2. Az első cég adatait felülírjuk a második cég értékével.
+    cseretarolo->elso->epuletek = cseretarolo->masodik->epuletek;
+
+    //3. A második cég adatait felülírjuk az eredetileg elmentettel(temp)
+    cseretarolo->masodik->epuletek = temp;
+}
 // <- 5. feladat 
 
 // 6. feladat ->
+struct ceg* nagytombcsinalo(struct ceg* ceg1, unsigned int cegMeret1, struct ceg* ceg2, unsigned int cegMeret2)
+{
+    // 1. Kiszámoljuk az új, nagy tömb teljes méretét
+    unsigned int ujMeret = cegMeret1 + cegMeret2;
+
+    // 2. Memóriát foglalunk az új tömbnek (calloc biztosítja, hogy tiszta, nullázott memóriát kapjunk)
+    struct ceg* nagytomb = (struct ceg*)calloc(ujMeret, sizeof(struct ceg));
+
+    // 3. Bemásoljuk az első tömböt az új tömb elejére
+    for (unsigned int i = 0; i < cegMeret1; i++)
+    {
+        nagytomb[i] = ceg1[i];
+    }
+
+    // 4. Bemásoljuk a második tömböt közvetlenül az első tömb után.
+    // A nagytomb indexe itt a cegMeret1-től indul
+    for (unsigned int i = 0; i < cegMeret2; i++)
+    {
+        nagytomb[cegMeret1 + i] = ceg2[i];
+    }
+
+    // 5. Visszatérünk az újonnan foglalt tömb címével
+    return nagytomb;
+}
+
 
 // <- 6. feladat 
 
