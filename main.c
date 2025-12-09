@@ -98,10 +98,32 @@ void feladat3(const char *fajlnev){
 // <- 3. feladat 
 
 // 4. feladat ->
+void fajlba(struct ceg* ceg, unsigned int meret, const char *fajlnev){
 
+    FILE* fajl = fopen(fajlnev, "w");
+
+
+
+    for (int i = 0; i < meret; i++)
+    {
+        fprintf(fajl,"%u\n", ceg[i].dolgozok);
+    }
+    fclose(fajl);
+    
+}
 // <- 4. feladat 
 
+
+//Eddig jutottam el
 // 5. feladat ->
+struct cseretarolo
+{
+    
+};
+
+void kigyujtes(){
+
+}
 
 // <- 5. feladat 
 
